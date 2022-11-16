@@ -22,10 +22,10 @@ app.post('/', upload.array('pdf',15), async(req,res,next)=>{
   await pdf.save('static/'+req.files[0].filename+'.pdf')
   res.download('static/'+req.files[0].filename+'.pdf')
   res.sendFile(path.join(__dirname,"templates/index.html"))
-  for(let i=0 ; i<req.files.length ;i++) {
-    fs.unlinkSync(path.join(__dirname,req.files[i].path));
-  }
   setTimeout(()=>{
+    for(let i=0 ; i<req.files.length ;i++) {
+      fs.unlinkSync(path.join(__dirname,req.files[i].path));
+    }
     fs.unlinkSync('static/'+req.files[0].filename+'.pdf');
   },1000*60*2)
 })
